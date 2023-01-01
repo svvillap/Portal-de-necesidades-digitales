@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/svvillap/Portal-de-necesidades-digitales/issues"
   },
-  "homepage": "https://github.com/svvillap/Portal-de-necesidades-digitales#readme"
+  "homepage": "https://github.com/svvillap/Portal-de-necesidades-digitales#readme",
+  "devDependencies": {
+    "eslint": "^8.31.0",
+    "prettier": "^2.8.1"
+  }
 }
