@@ -1,0 +1,19 @@
+{
+  "name": "portal-de-necesidades-digitales",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/svvillap/Portal-de-necesidades-digitales.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/svvillap/Portal-de-necesidades-digitales/issues"
+  },
+  "homepage": "https://github.com/svvillap/Portal-de-necesidades-digitales#readme"
+}
