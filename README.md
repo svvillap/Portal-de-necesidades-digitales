@@ -15,9 +15,9 @@ La lista de productos y servicios que se pueden ofrecer es extensa, siempre y cu
 
 ## ¿Cómo tener acceso a la plataforma?
 
-Lo primero sería básicamente registrarte en la plataforma, algo sencillo ya que no te tomará mucho tiempo rellenar tus datos básicos y de forma gratuita. Tu registro puede ser de forma ánonima donde tendrás acceso a solicitar o publicar los productos o servicios que necesites.
+Tendrás acceso a la lista de productos y servicios que se ofrecen en la plataforma sin registro previo, pero para poder adquirirlos o ofrecerlos necesitarás registrarte en la plataforma. Lo primero sería registrarte en la plataforma, algo sencillo ya que no te tomará mucho tiempo rellenar tus datos básicos y de forma gratuita. También puedes registrarte con tu cuenta de Google o Facebook, esto te ahorrará tiempo y es más sencillo.
 
-Posterior a tu registro tendrás acceso a la plataforma y a tu perfil el cual podrás personalizar de forma creativa para los demás usuarios. Si presentas algún producto o servicio lo ideal sería impresionar haciendo enfásis en por qué deberían contratarte, creando el producto o servicio perfecto cla información básica del elemento, tan sencillo pero importante como ciertas descripciones de lo que ofreces.
+Posterior a tu registro tendrás acceso a la plataforma y a tu perfil el cual podrás personalizar de forma creativa para los demás usuarios. Si presentas algún producto o servicio lo ideal sería impresionar haciendo enfásis en por qué deberían contratarte, creando el producto o servicio perfecto con información básica del elemento, tan sencillo pero importante como ciertas descripciones de lo que ofreces.
 
 ## ¿Cómo está creada la base de datos?
 
