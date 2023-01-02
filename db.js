@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const mysql = require("mysql2/promise");
 
 const { MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE } = process.env;
@@ -17,9 +15,12 @@ async function getConnection() {
       timezone: "Z",
     });
   }
-
   return await pool.getConnection();
 }
+
+getConnection();
+
+
 
 module.exports = {
   getConnection,
