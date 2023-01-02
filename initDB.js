@@ -7,6 +7,8 @@ let connection;
 async function main() {
   try {
     connection = await getConnection();
+    console.log('Conectado a la base de datos');
+    console.log('Borrando tablas antiguas...');
 
     await connection.query('DROP TABLE IF EXISTS COMENTARIOS');
     await connection.query('DROP TABLE IF EXISTS SERVICIOS');
@@ -80,9 +82,11 @@ async function main() {
   } catch (error) {
     console.error(error);
   } finally {
+    console.log(`Tablas creadas`)
     if (connection) connection.release();
     process.exit();
   }
 }
+
 
 main();
