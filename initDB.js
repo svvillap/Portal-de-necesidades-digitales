@@ -26,7 +26,7 @@ async function main() {
 
     await connection.query(`
     CREATE TABLE SERVICIOS (
-        ID INTEGER PRIMARY KEY AUTO_INCREMENT
+        ID INTEGER PRIMARY KEY AUTO_INCREMENT,
         TÍTULO TINYTEXT, 
         ID_CATEGORÍAS INTEGER NOT NULL,
         ID_SUBCATEGORÍAS INTEGER NOT NULL, 
@@ -43,7 +43,7 @@ async function main() {
     CREATE TABLE CATEGORÍAS (
         ID INTEGER PRIMARY KEY AUTO_INCREMENT,
         NOMBRE TINYTEXT, 
-        DESCRIPCIÓN VARCHAR(150),
+        DESCRIPCIÓN VARCHAR(150)
     );
     `);
 
@@ -54,7 +54,7 @@ async function main() {
         ID INTEGER PRIMARY KEY AUTO_INCREMENT,
         ID_CATEGORÍAS INTEGER NOT NULL,
         NOMBRE TINYTEXT, 
-        DESCRIPCIÓN VARCHAR(150),
+        DESCRIPCIÓN VARCHAR(150)
     );
     `);
 
@@ -64,7 +64,7 @@ async function main() {
     CREATE TABLE COMENTARIOS (
         ID INTEGER PRIMARY KEY AUTO_INCREMENT, 
         ID_USUARIOS INTEGER NOT NULL, 
-        ID_SERVICIOS INETGER NOT NULL, 
+        ID_SERVICIOS INTEGER NOT NULL, 
         TEXTO VARCHAR(500)
     );
     `);
