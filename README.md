@@ -31,3 +31,28 @@ Posterior a tu registro tendrás acceso a la plataforma y a tu perfil el cual po
 |   BIOGRAFÍA  |   DESCRIPCIÓN  |   -  |   -  |   -  |
 |   NOMBRE_USUARIO  |   FICHERO_DIGITAL  |   -  |   -  |   -  |
 |   -  |   STATUS  |   -  |   -  |   -  |
+
+### Relaciones entre tablas
+
+#### USERS-SERVICIOS
+Users tiene una relación de uno a muchos con servicios, esto quiere decir que un usuario puede tener muchos servicios pero un servicio solo puede tener un usuario.
+
+En la tabla SERVICIOS tenemos una columna ID_USER que hace referencia a la columna ID de la tabla USERS, esto quiere decir que el ID de la tabla USERS es la clave foránea de la tabla SERVICIOS.
+
+#### SERVICIOS-CATEGORÍAS
+Categoria tiene una relación de uno a muchos con servicios, esto quiere decir que una categoria puede tener muchos servicios pero un servicio solo puede tener una categoria.
+
+En la tabla SERVICIOS tenemos una columna ID_CATEGORÍA que hace referencia a la columna ID de la tabla CATEGORÍAS, esto quiere decir que el ID de la tabla CATEGORÍAS es la clave foránea de la tabla SERVICIOS.
+
+#### CATEGORÍAS-SUBCATEGORÍAS
+
+Subcategoria tiene una relación de uno a muchos con categorias, esto quiere decir que una subcategoria puede tener muchas categorias pero una categoria solo puede tener una subcategoria.
+
+En la tabla CATEGORÍAS tenemos una columna ID_SUBCATEGORÍA que hace referencia a la columna ID de la tabla SUBCATEGORÍAS, esto quiere decir que el ID de la tabla SUBCATEGORÍAS es la clave foránea de la tabla CATEGORÍAS.
+
+#### SERVICIOS-COMENTARIOS
+
+Servicios tiene una relación de uno a muchos con comentarios, esto quiere decir que un servicio puede tener muchos comentarios pero un comentario solo puede tener un servicio.
+
+En la tabla COMENTARIOS tenemos una columna ID_SERVICIOS que hace referencia a la columna ID de la tabla SERVICIOS, esto quiere decir que el ID de la tabla SERVICIOS es la clave foránea de la tabla COMENTARIOS.
+
