@@ -81,6 +81,6 @@ async function main() {
     process.exit();
   }
 }
-
+//incorporamos las seeds
 seeds();
 main();
