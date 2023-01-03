@@ -20,7 +20,7 @@ const newServiceController = async (req, res, next) => {
         const { title, description, price, date, categoriaId, subcategoriaId } = req.body;
         console.log(req.body);
         console.log(userId, title, description, price, date);
-        // TODO: Implementar con Joi
+        // TODO: Implementar con Joi (validar que los campos no estén vacíos, y maximo de caracteres)
         if(!title || !description || !price || !date) {
             throw generateError('Faltan campos', 400);
         }
