@@ -16,7 +16,7 @@ const createUser = async (email, password, nameUser) => {
         const passwordHash = await bcrypt.hash(password, 8);
     
         //Insertar el usuario en la base de datos
-        const [newUser] = await connection.query(`INSERT INTO USUARIOS (EMAIL, CONTRASEÑA, NOMBRE_USUARIO) VALUES (?, ?, ?)`, [email, passwordHash, nameUser]);  
+        const [newUser] = await connection.query(`INSERT INTO USUARIOS (EMAIL, CONTRASENHA, NOMBRE_USUARIO) VALUES (?, ?, ?)`, [email, passwordHash, nameUser]);  
         //Devolver el id del usuario
         return newUser.insertId;
     } finally {
@@ -38,8 +38,24 @@ const getUserById = async (id) => {
         if(connection) connection.release();
     }
 }
+
+//Devuelve información pública de un usuario de la base de datos por su email
+const getUserByEmail = async (email) => {
+    let connection;
+    try{
+        connection = await getConnection();
+        const [result] = await connection.query(`SELECT * FROM USUARIOS WHERE email = ?`, [email]);
+        if(result.length === 0) {
+            throw generateError('No existe un usuario con ese email', 404)
+        }
+        return result[0];
+    } finally {
+        if(connection) connection.release();
+    }
+}
  
 module.exports = {
     createUser,
-    getUserById
+    getUserById,
+    getUserByEmail
 }

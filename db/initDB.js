@@ -22,7 +22,7 @@ async function main() {
             ID INTEGER PRIMARY KEY AUTO_INCREMENT,
             NOMBRE TINYTEXT,
             EMAIL VARCHAR(100) UNIQUE NOT null,
-            CONTRASEÑA TINYTEXT NOT null,
+            CONTRASENHA TINYTEXT NOT null,
             BIOGRAFIA TINYTEXT, 
             IMAGEN TINYTEXT,
             NOMBRE_USUARIO TINYTEXT NOT NULL,
