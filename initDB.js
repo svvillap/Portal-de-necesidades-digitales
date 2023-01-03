@@ -1,4 +1,5 @@
 require('dotenv').config();
+const { seeds } = require('./seeds');
 
 const { getConnection } = require('./db');
 
@@ -27,8 +28,6 @@ async function main() {
             ); 
         `);
 
-
-
     await connection.query(`
         CREATE TABLE CATEGORIAS (
             ID INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -47,7 +46,6 @@ async function main() {
         );
         `);
 
-
     await connection.query(`
     CREATE TABLE SERVICIOS (
         ID INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -64,7 +62,6 @@ async function main() {
         FOREIGN KEY (ID_USUARIOS) REFERENCES USUARIOS(ID)
         ); 
     `);
-
 
     await connection.query(`
     CREATE TABLE COMENTARIOS (
@@ -85,4 +82,5 @@ async function main() {
   }
 }
 
+seeds();
 main();
