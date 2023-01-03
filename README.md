@@ -46,3 +46,9 @@ En la tabla CATEGORÍAS tenemos una columna ID_SUBCATEGORÍA que hace referencia
 Servicios tiene una relación de uno a muchos con comentarios, esto quiere decir que un servicio puede tener muchos comentarios pero un comentario solo puede tener un servicio.
 
 En la tabla COMENTARIOS tenemos una columna ID_SERVICIOS que hace referencia a la columna ID de la tabla SERVICIOS, esto quiere decir que el ID de la tabla SERVICIOS es la clave foránea de la tabla COMENTARIOS.
+
+#### USERS-COMENTARIOS
+
+Users tiene una relación de uno a muchos con comentarios, esto quiere decir que un usuario puede tener muchos comentarios pero un comentario solo puede tener un usuario.
+
+En la tabla COMENTARIOS tenemos una columna ID_USERS que hace referencia a la columna ID de la tabla USERS, esto quiere decir que el ID de la tabla USERS es la clave foránea de la tabla COMENTARIOS.
