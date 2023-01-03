@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const { getConnection } = require('./db');
+const { seeds } = require('./seeds');
 
 let connection;
 
@@ -89,4 +90,6 @@ async function main() {
 }
 
 
+//incorporamos las seeds
+seeds();
 main();
