@@ -1,9 +1,11 @@
 const express = require('express')
 const morgan = require('morgan')
 
+
+const { newUserController, updateUserController , deleteUserController, getUserController, loginController } = require('./Controladores/users');
+const { listServices, newServiceController, deleteService, updateService, doneService, listSingleService } = require('./Controladores/servicios');
 const { listComments, createComment, deleteComment, listSingleComment } = require('./Controladores/comentarios');
-const { listServices, createService, deleteService, updateService, doneService, listSingleService } = require('./Controladores/servicios');
-const { newUserController, updateUser , deleteUser, getUserController, loginController } = require('./Controladores/users');
+const { authUser } = require('./Middlewares/auth');
 
 const app = express()
 
@@ -14,12 +16,17 @@ app.use(morgan('dev'));
 app.post('/user', newUserController);
 app.get('/user/:id', getUserController);
 app.post('/login', loginController);
+app.delete('/user/:id', deleteUserController);
+app.put('/user/:id', updateUserController);
+
 
 // Rutas de servicios
 app.get('/', listServices);
-app.post('/', createService);
+app.post('/', authUser, newServiceController);
 app.get('/service/:id', listSingleService);
 app.delete('/service/:id', deleteService);
+app.put('/service/:id', updateService);
+app.put('/service/:id/done', doneService);
 
 // Rutas de comentarios
 app.get('/comments', listComments);

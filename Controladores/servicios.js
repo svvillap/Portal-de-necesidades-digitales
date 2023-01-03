@@ -1,4 +1,5 @@
-
+const { generateError } = require('../helpers');
+const { createService } = require('../db/services');
 
 const listServices = async (req, res, next) => {
     // Este endpoint es para listar servicios
@@ -12,12 +13,21 @@ const listServices = async (req, res, next) => {
      }
 };
 
-const createService = async (req, res, next) => {
+const newServiceController = async (req, res, next) => {
     // Este endpoint es para crear servicios
     try {
+        const userId = req.userId;
+        const { title, description, price, date, categoriaId, subcategoriaId } = req.body;
+        console.log(req.body);
+        console.log(userId, title, description, price, date);
+        // TODO: Implementar con Joi
+        if(!title || !description || !price || !date) {
+            throw generateError('Faltan campos', 400);
+        }
+        const id = await createService(title, description, price, date, userId, categoriaId, subcategoriaId);
         res.send({
-         status: 'error',
-         message: 'Not implemented'
+         status: 'ok',
+         message: `Servicio creado con el id: ${id}`
         })
      } catch (error) {
          next(error)
@@ -75,7 +85,7 @@ const listSingleService = async (req, res, next) => {
 
 module.exports = {
     listServices,
-    createService,
+    newServiceController,
     deleteService,
     updateService,
     doneService,

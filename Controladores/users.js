@@ -7,7 +7,7 @@ const newUserController = async (req, res, next) => {
     // Este endpoint es para crear usuarios
     try {
         const { nameUser, email, password } = req.body;
-        // Validar que los campos no estén vacíos con JOI (falta implementar)
+        // TODO: Validar que los campos no estén vacíos con JOI 
         if(!nameUser || !email || !password) {
             throw generateError('Faltan campos', 400);
         }
@@ -38,7 +38,7 @@ const getUserController = async (req, res, next) => {
      }
 };
     
-const deleteUser = async (req, res, next) => {
+const deleteUserController = async (req, res, next) => {
     // Este endpoint es para borrar usuarios
     try {
        res.send({
@@ -50,7 +50,7 @@ const deleteUser = async (req, res, next) => {
     }
 };
 
-const updateUser = async (req, res, next) => {
+const updateUserController = async (req, res, next) => {
     // Este endpoint es para actualizar usuarios
     try {
         res.send({
@@ -78,7 +78,7 @@ const loginController = async (req, res, next) => {
             throw generateError('Contraseña incorrecta', 401);
         }
         //Creo payload para el token
-        const payload = {id: user.id};
+        const payload = {id: user.ID};
         //Firmo el token
         const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: '30d',
@@ -95,8 +95,8 @@ const loginController = async (req, res, next) => {
 
 module.exports = {
     newUserController,
-    deleteUser,
-    updateUser,
+    deleteUserController,
+    updateUserController,
     getUserController,
     loginController
 };
