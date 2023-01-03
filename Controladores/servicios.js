@@ -1,37 +1,83 @@
-const { getConnection } = require("../db");
 
 
-const listServices = async (req, res) => {
-    let conection = await getConnection();
-
-    const services = await conection.query("codigo sql");
-    res.send(services);
+const listServices = async (req, res, next) => {
+    // Este endpoint es para listar servicios
+    try {
+        res.send({
+         status: 'error',
+         message: 'Not implemented'
+        })
+     } catch (error) {
+         next(error)
+     }
 };
 
-const createService = async (req, res) => {
+const createService = async (req, res, next) => {
     // Este endpoint es para crear servicios
-    res.status(201).send("Servicio creado");
+    try {
+        res.send({
+         status: 'error',
+         message: 'Not implemented'
+        })
+     } catch (error) {
+         next(error)
+     }
 };
 
-const deleteService = async (req, res) => {
+const deleteService = async (req, res, next) => {
     // Este endpoint es para borrar servicios
-    res.status(201).send("Servicio borrado");
+    try {
+        res.send({
+         status: 'error',
+         message: 'Not implemented'
+        })
+     } catch (error) {
+         next(error)
+     }
 };
 
-const updateService = async (req, res) => {
+const updateService = async (req, res, next) => {
     // Este endpoint es para actualizar servicios
-    res.status(201).send("Servicio actualizado");
+    try {
+        res.send({
+         status: 'error',
+         message: 'Not implemented'
+        })
+     } catch (error) {
+         next(error)
+     }
 };
 
-const doneService = async (req, res) => {
+const doneService = async (req, res, next) => {
     // Este endpoint es para marcar servicios como realizados
-    res.status(201).send("Servicio realizado");
+    try {
+        res.send({
+         status: 'error',
+         message: 'Not implemented'
+        })
+     } catch (error) {
+         next(error)
+     }
 };
+
+const listSingleService = async (req, res, next) => {
+    // Este endpoint es para listar un servicio
+    try {
+        res.send({
+         status: 'error',
+         message: 'Not implemented'
+        })
+     } catch (error) {
+         next(error)
+     }
+};
+
 
 module.exports = {
     listServices,
     createService,
     deleteService,
     updateService,
-    doneService
+    doneService,
+    listSingleService
 };

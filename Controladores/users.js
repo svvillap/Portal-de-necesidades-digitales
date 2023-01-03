@@ -1,25 +1,86 @@
-const { getConnection } = require("../db");
+const { generateError } = require("../helpers");
+const { createUser, getUserById } = require("../db/users");
 
-const createUser = async (req, res) => {
+const newUserController = async (req, res, next) => {
     // Este endpoint es para crear usuarios
-    res.status(201).send("Usuario creado");
+    try {
+        const { nameUser, email, password } = req.body;
+        console.log(nameUser)
+        console.log(email)
+        console.log(password)
+
+        // Validar que los campos no estén vacíos con JOI (falta implementar)
+        if(!nameUser || !email || !password) {
+            throw generateError('Faltan campos', 400);
+        }
+        const id = await createUser(email, password, nameUser);
+
+       res.send({
+        status: 'ok',
+        message: `Usuario creado con el id ${id}`
+       })
+    } catch (error) {
+        next(error)
+    }
 };
 
-const deleteUser = async (req, res) => {
+const getUserController = async (req, res, next) => {
+    // Este endpoint es para listar usuarios
+    try {
+        const { id } = req.params;
+
+        const user = await getUserById(id);
+        
+        res.send({
+         status: 'ok',
+         message: user,
+        })
+     } catch (error) {
+         next(error)
+     }
+};
+    
+const deleteUser = async (req, res, next) => {
     // Este endpoint es para borrar usuarios
-    let conection = await getConnection();
-    const user = await conection.query("codigo sql");
-    res.status(201).send("Usuario borrado");
-    console.log(user)
+    try {
+       res.send({
+        status: 'error',
+        message: 'Not implemented'
+       })
+    } catch (error) {
+        next(error)
+    }
 };
 
-const updateUser = async (req, res) => {
+const updateUser = async (req, res, next) => {
     // Este endpoint es para actualizar usuarios
-    res.status(201).send("Usuario actualizado");
+    try {
+        res.send({
+         status: 'error',
+         message: 'Not implemented'
+        })
+     } catch (error) {
+         next(error)
+     }
+};
+
+
+const loginController = async (req, res, next) => {
+    // Este endpoint es para loguear usuarios
+    try {
+        res.send({
+         status: 'error',
+         message: 'Not implemented'
+        })
+     } catch (error) {
+         next(error)
+     }
 };
 
 module.exports = {
-    createUser,
+    newUserController,
     deleteUser,
-    updateUser
+    updateUser,
+    getUserController,
+    loginController
 };
