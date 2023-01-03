@@ -3,6 +3,7 @@ const { getConnection } = require('./db');
 let connection;
 
 async function seeds() {
+  try{
   connection = await getConnection();
   await connection.query(
     `
@@ -25,5 +26,14 @@ async function seeds() {
       (5, 5, 'Consultas legales', 'Prestar asesoramiento correcto y oportuno a los ejecutivos sobre distintas cuestiones jurídicas.')
   `
   );
+} catch (error) {
+  console.error(error);
+} finally {
+  console.log(`Categorías añadidas`)
+  if (connection) connection.release();
+  process.exit();
 }
+
+}
+
 module.exports = { seeds };

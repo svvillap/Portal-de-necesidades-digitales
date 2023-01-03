@@ -85,11 +85,8 @@ async function main() {
   } finally {
     console.log(`Tablas creadas`)
     if (connection) connection.release();
-    process.exit();
   }
 }
+ // Añadimos los seeds cuando termine la ejecución de main()
+main().then(() => seeds());
 
-
-//incorporamos las seeds
-seeds();
-main();
