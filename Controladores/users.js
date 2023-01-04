@@ -2,17 +2,24 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const sharp = require('sharp');
+//
 const { nanoid } = require('nanoid');
+//
 const { getConnection } = require('../db/db.js');
+//
 const { newUserSchema } = require('../validator/validadorUsuario');
-
+const { updateUserSchema } = require('../validator/validadorUsuario');
+const { loginSchema } = require('../validator/validadorUsuario');
+//
 const { generateError, creathePathIfNotExists } = require('../helpers');
 const { createUser, getUserById, getUserByEmail } = require('../db/users');
 
 const newUserController = async (req, res, next) => {
   // Este endpoint es para crear usuarios
   try {
+    //validacion con joi de los campos NameUser, email, password.
     await newUserSchema.validateAsync(req.body);
+    //
     let imageFileName;
     if (req.files && req.files.image) {
       //procesado de imagenes
@@ -31,7 +38,6 @@ const newUserController = async (req, res, next) => {
     }
 
     const { nameUser, email, password } = req.body;
-    // TODO: Validar que los campos no estén vacíos con JOI
     if (!nameUser || !email || !password) {
       throw generateError('Faltan campos', 400);
     }
@@ -94,10 +100,8 @@ const updateUserController = async (req, res, next) => {
     connection = await getConnection();
     const usuariosId = req.userId;
     const { nameUser, email, password, biografia } = req.body;
-    // TODO: Validar que los campos no estén vacíos con JOI
-    if (!nameUser || !email || !password || !biografia) {
-      throw generateError('Faltan campos', 400);
-    }
+    // validacion de los campos nameUser, email, password (required) y biografia con JOI
+    await updateUserSchema.validateAsync(req.body);
 
     await connection.query(
       `
@@ -122,10 +126,9 @@ const loginController = async (req, res, next) => {
   // Este endpoint es para loguear usuarios
   try {
     const { email, password } = req.body;
-    //(falta implementar con Joi)
-    if (!email || !password) {
-      throw generateError('Faltan campos', 400);
-    }
+    //validacion de los campos email y password con joi
+    await loginSchema.validateAsync(req.body);
+
     const user = await getUserByEmail(email);
     //comprobar contraseña coincide con la de la base de datos
     const validPassword = await bcrypt.compare(password, user.CONTRASENHA);
