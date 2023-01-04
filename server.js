@@ -35,7 +35,7 @@ app.use(morgan('dev'));
 app.post('/user', newUserController);
 app.get('/user/:id', getUserController);
 app.post('/login', loginController);
-app.delete('/user', deleteUserController);
+app.delete('/user', authUser, deleteUserController);
 app.put('/user/:id', updateUserController);
 
 // Rutas de servicios
