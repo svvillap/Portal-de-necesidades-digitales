@@ -1,5 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
+const fileUpload = require('express-fileupload');
+
 
 
 const { newUserController, updateUserController , deleteUserController, getUserController, loginController } = require('./Controladores/users');
@@ -7,8 +9,10 @@ const { listServices, newServiceController, deleteService, updateService, doneSe
 const { listComments, createComment, deleteComment, listSingleComment } = require('./Controladores/comentarios');
 const { authUser } = require('./Middlewares/auth');
 
+
 const app = express()
 
+app.use(fileUpload());
 app.use(express.json());
 app.use(morgan('dev'));
 
