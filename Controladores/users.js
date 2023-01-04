@@ -87,13 +87,32 @@ const deleteUserController = async (req, res, next) => {
 
 const updateUserController = async (req, res, next) => {
   // Este endpoint es para actualizar usuarios
+  let connection;
   try {
+    connection = await getConnection();
+    const usuariosId = req.userId;
+    const { nameUser, email, password, biografia } = req.body;
+    // TODO: Validar que los campos no estén vacíos con JOI
+    if (!nameUser || !email || !password || !biografia) {
+      throw generateError('Faltan campos', 400);
+    }
+
+    await connection.query(
+      `
+        UPDATE USUARIOS 
+        SET NOMBRE =?, EMAIL=?, CONTRASENHA=?, BIOGRAFIA=?
+        WHERE id=?
+      `,
+      [nameUser, email, password, biografia, usuariosId]
+    );
     res.send({
-      status: 'error',
-      message: 'Not implemented',
+      status: 'ok',
+      message: 'Usuario actualizado',
     });
   } catch (error) {
     next(error);
+  } finally {
+    if (connection) connection.release();
   }
 };
 

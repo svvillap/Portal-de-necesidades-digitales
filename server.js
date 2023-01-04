@@ -36,7 +36,7 @@ app.post('/user', newUserController);
 app.get('/user/:id', getUserController);
 app.post('/login', loginController);
 app.delete('/user', authUser, deleteUserController);
-app.put('/user/:id', updateUserController);
+app.put('/user', authUser, updateUserController);
 
 // Rutas de servicios
 app.get('/', listServices);
