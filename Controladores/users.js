@@ -1,10 +1,11 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { generateError, creathePathIfNotExists } = require("../helpers");
-const { createUser, getUserById, getUserByEmail } = require("../db/users");
 const path = require('path');
 const sharp = require('sharp');
+const { nanoid } = require('nanoid');
 
+const { generateError, creathePathIfNotExists } = require("../helpers");
+const { createUser, getUserById, getUserByEmail } = require("../db/users");
 
 const newUserController = async (req, res, next) => {
     // Este endpoint es para crear usuarios
@@ -21,7 +22,7 @@ const newUserController = async (req, res, next) => {
             const image = sharp(req.files.image.data);
             image.resize(300, 300);
             //Guardo la imagen en el directorio uploads con un nombre único aleatorio
-            imageFileName = `${req.files.image.md5}.jpg`
+            imageFileName = `${nanoid()}.jpg`
             await image.toFile(path.join(uploadsDir, imageFileName));
             console.log(imageFileName)
         }

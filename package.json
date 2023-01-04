@@ -30,7 +30,7 @@
     "express-fileupload": "^1.4.0",
     "jsonwebtoken": "^9.0.0",
     "morgan": "^1.10.0",
-    "nanoid": "^4.0.0",
-    "sharp": "^0.31.3"
+    "sharp": "^0.31.3",
+    "nanoid": "^3.3.3"
   }
 }
