@@ -4,6 +4,7 @@ const path = require('path');
 const sharp = require('sharp');
 const { nanoid } = require('nanoid');
 const { getConnection } = require('../db/db.js');
+const { newUserSchema } = require('../validator/validadorUsuario');
 
 const { generateError, creathePathIfNotExists } = require('../helpers');
 const { createUser, getUserById, getUserByEmail } = require('../db/users');
@@ -11,6 +12,7 @@ const { createUser, getUserById, getUserByEmail } = require('../db/users');
 const newUserController = async (req, res, next) => {
   // Este endpoint es para crear usuarios
   try {
+    await newUserSchema.validateAsync(req.body);
     let imageFileName;
     if (req.files && req.files.image) {
       //procesado de imagenes
