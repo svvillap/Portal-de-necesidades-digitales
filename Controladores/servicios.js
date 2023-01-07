@@ -1,8 +1,12 @@
-const { createService, listServices, listSingleService, deleteService } = require('../db/services');
+const {
+  createService,
+  listServices,
+  listSingleService,
+  deleteService,
+} = require('../db/services');
 const { newServiceSchema } = require('../validator/validadorServicios');
 
 const { generateError } = require('../helpers');
-
 
 const listServicesController = async (req, res, next) => {
   // Este endpoint es para listar servicios
@@ -46,27 +50,24 @@ const newServiceController = async (req, res, next) => {
 const deleteServiceController = async (req, res, next) => {
   // Este endpoint es para borrar servicios
 
-    try {
-        const { id } = req.params;
-   
-        //Conseguir información del servicio a borrar
-        const service = await listSingleService(id);
-        console.log(service);
-        console.log(req.userId)
-        console.log(service.ID_USUARIOS)
-        //Comprobar que el usuario que quiere borrar el servicio es el propietario del servicio
-        if (req.userId !== service.ID_USUARIOS) {
-            throw generateError('No puedes borrar un servicio que no es tuyo', 401);
-        }
-        //Borrar el servicio
-        await deleteService(id);
-        res.send({
-            status: 'erokror',
-            message: `Servicio borrado con el id: ${id}`,	
-    });
-    } catch (error) {
-    next(error);
+  try {
+    const { id } = req.params;
+
+    //Conseguir información del servicio a borrar
+    const service = await listSingleService(id);
+    //Comprobar que el usuario que quiere borrar el servicio es el propietario del servicio
+    if (req.userId !== service.ID_USUARIOS) {
+      throw generateError('No puedes borrar un servicio que no es tuyo', 401);
     }
+    //Borrar el servicio
+    await deleteService(id);
+    res.send({
+      status: 'ok',
+      message: `Servicio borrado con el id: ${id}`,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 const updateService = async (req, res, next) => {
@@ -113,5 +114,5 @@ module.exports = {
   newServiceController,
   deleteServiceController,
   updateService,
-  doneService
+  doneService,
 };

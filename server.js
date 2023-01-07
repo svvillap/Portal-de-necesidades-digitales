@@ -18,11 +18,10 @@ const {
   doneService,
 } = require('./Controladores/servicios');
 const {
-  listCommentsController,
-  createComment,
-  deleteComment,
-  listSingleComment,
-  createCommentController,
+  listCommentsController, //Done
+  createCommentController, //Done
+  deleteCommentController,
+  listSingleCommentController,
 } = require('./Controladores/comentarios');
 const { authUser } = require('./Middlewares/auth');
 
@@ -49,10 +48,10 @@ app.put('/service/:id', updateService);
 app.put('/service/:id/done', doneService);
 
 // Rutas de comentarios
-app.get('/comments/:idService', authUser, listCommentsController);
+app.get('/service/:idService/comments', authUser, listCommentsController);
 app.post('/comments/:idService', authUser, createCommentController);
-app.get('/comments/:id', listSingleComment);
-app.delete('/comments/:id', deleteComment);
+app.get('/comments/:id', authUser, listSingleCommentController);
+app.delete('/comments/:id', authUser, deleteCommentController);
 
 // Middleware de 404
 app.use((req, res) => {

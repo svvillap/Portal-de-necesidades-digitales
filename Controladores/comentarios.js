@@ -1,5 +1,11 @@
-const { listComments, createComment } = require('../db/comments');
+const {
+  listComments,
+  createComment,
+  deleteComment,
+  listSingleComment,
+} = require('../db/comments');
 const { newCommentSchema } = require('../validator/validadorComentarios');
+const { generateError } = require('../helpers');
 
 const listCommentsController = async (req, res, next) => {
   // Este endpoint es para listar comentarios
@@ -33,24 +39,36 @@ const createCommentController = async (req, res, next) => {
   }
 };
 
-const deleteComment = async (req, res, next) => {
+const deleteCommentController = async (req, res, next) => {
   // Este endpoint es para borrar comentarios
   try {
+    const { id } = req.params;
+
+    //Conseguir información del servicio a borrar
+    const comentario = await listSingleComment(id);
+    //Comprobar que el usuario que quiere borrar el servicio es el propietario del servicio
+    if (req.userId !== comentario.ID_USUARIOS) {
+      throw generateError('No puedes borrar un servicio que no es tuyo', 401);
+    }
+    //Borrar el servicio
+    await deleteComment(id);
     res.send({
-      status: 'error',
-      message: 'Not implemented',
+      status: 'ok',
+      message: `Comentario borrado con el id: ${id}`,
     });
   } catch (error) {
     next(error);
   }
 };
 
-const listSingleComment = async (req, res, next) => {
+const listSingleCommentController = async (req, res, next) => {
   // Este endpoint es para listar un comentario
   try {
+    const { id } = req.params;
+    const comentario = await listSingleComment(id);
     res.send({
-      status: 'error',
-      message: 'Not implemented',
+      status: 'ok',
+      data: comentario,
     });
   } catch (error) {
     next(error);
@@ -60,6 +78,6 @@ const listSingleComment = async (req, res, next) => {
 module.exports = {
   listCommentsController,
   createCommentController,
-  deleteComment,
-  listSingleComment,
+  deleteCommentController,
+  listSingleCommentController,
 };
