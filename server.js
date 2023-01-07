@@ -18,7 +18,7 @@ const {
   doneService,
 } = require('./Controladores/servicios');
 const {
-  listComments,
+  listCommentsController,
   createComment,
   deleteComment,
   listSingleComment,
@@ -43,12 +43,12 @@ app.put('/user', authUser, updateUserController);
 app.get('/', listServicesController);
 app.get('/service/:id', listSingleServiceController);
 app.post('/', authUser, newServiceController);
-app.delete('/service/:id', authUser,  deleteServiceController);
+app.delete('/service/:id', authUser, deleteServiceController);
 app.put('/service/:id', updateService);
 app.put('/service/:id/done', doneService);
 
 // Rutas de comentarios
-app.get('/comments', listComments);
+app.get('/comments/:idService', listCommentsController);
 app.post('/comments', createComment);
 app.get('/comments/:id', listSingleComment);
 app.delete('/comments/:id', deleteComment);
