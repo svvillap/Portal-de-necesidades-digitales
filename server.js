@@ -20,8 +20,8 @@ const {
 const {
   listCommentsController, //Done
   createCommentController, //Done
-  deleteCommentController,
-  listSingleCommentController,
+  deleteCommentController, //Done
+  listSingleCommentController, // Done
 } = require('./Controladores/comentarios');
 const { authUser } = require('./Middlewares/auth');
 
