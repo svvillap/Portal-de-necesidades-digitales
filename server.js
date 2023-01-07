@@ -22,6 +22,7 @@ const {
   createComment,
   deleteComment,
   listSingleComment,
+  createCommentController,
 } = require('./Controladores/comentarios');
 const { authUser } = require('./Middlewares/auth');
 
@@ -48,8 +49,8 @@ app.put('/service/:id', updateService);
 app.put('/service/:id/done', doneService);
 
 // Rutas de comentarios
-app.get('/comments/:idService', listCommentsController);
-app.post('/comments', createComment);
+app.get('/comments/:idService', authUser, listCommentsController);
+app.post('/comments/:idService', authUser, createCommentController);
 app.get('/comments/:id', listSingleComment);
 app.delete('/comments/:id', deleteComment);
 
