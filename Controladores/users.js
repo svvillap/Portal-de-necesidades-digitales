@@ -73,6 +73,7 @@ const deleteUserController = async (req, res, next) => {
   let connection;
   try {
     const usuariosId = req.userId;
+    console.log(usuariosId)
     connection = await getConnection();
 
     await connection.query(
@@ -84,7 +85,7 @@ const deleteUserController = async (req, res, next) => {
     );
     res.send({
       status: 'ok',
-      message: 'Usuario eliminado',
+      message: 'Usuario con id ${usuariosId} eliminado',
     });
   } catch (error) {
     next(error);

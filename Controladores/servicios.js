@@ -1,12 +1,17 @@
-const { createService } = require('../db/services');
+const { createService, listServices, listSingleService, deleteService } = require('../db/services');
 const { newServiceSchema } = require('../validator/validadorServicios');
 
-const listServices = async (req, res, next) => {
+const { generateError } = require('../helpers');
+
+
+const listServicesController = async (req, res, next) => {
   // Este endpoint es para listar servicios
   try {
+    const services = await listServices();
+
     res.send({
-      status: 'error',
-      message: 'Not implemented',
+      status: 'ok',
+      data: services,
     });
   } catch (error) {
     next(error);
@@ -38,16 +43,30 @@ const newServiceController = async (req, res, next) => {
   }
 };
 
-const deleteService = async (req, res, next) => {
+const deleteServiceController = async (req, res, next) => {
   // Este endpoint es para borrar servicios
-  try {
-    res.send({
-      status: 'error',
-      message: 'Not implemented',
+
+    try {
+        const { id } = req.params;
+   
+        //Conseguir información del servicio a borrar
+        const service = await listSingleService(id);
+        console.log(service);
+        console.log(req.userId)
+        console.log(service.ID_USUARIOS)
+        //Comprobar que el usuario que quiere borrar el servicio es el propietario del servicio
+        if (req.userId !== service.ID_USUARIOS) {
+            throw generateError('No puedes borrar un servicio que no es tuyo', 401);
+        }
+        //Borrar el servicio
+        await deleteService(id);
+        res.send({
+            status: 'erokror',
+            message: `Servicio borrado con el id: ${id}`,	
     });
-  } catch (error) {
+    } catch (error) {
     next(error);
-  }
+    }
 };
 
 const updateService = async (req, res, next) => {
@@ -74,12 +93,14 @@ const doneService = async (req, res, next) => {
   }
 };
 
-const listSingleService = async (req, res, next) => {
+const listSingleServiceController = async (req, res, next) => {
   // Este endpoint es para listar un servicio
   try {
+    const { id } = req.params;
+    const service = await listSingleService(id);
     res.send({
-      status: 'error',
-      message: 'Not implemented',
+      status: 'ok',
+      data: service,
     });
   } catch (error) {
     next(error);
@@ -87,10 +108,10 @@ const listSingleService = async (req, res, next) => {
 };
 
 module.exports = {
-  listServices,
+  listServicesController,
+  listSingleServiceController,
   newServiceController,
-  deleteService,
+  deleteServiceController,
   updateService,
-  doneService,
-  listSingleService,
+  doneService
 };

@@ -3,19 +3,19 @@ const morgan = require('morgan');
 const fileUpload = require('express-fileupload');
 
 const {
-  newUserController,
-  updateUserController,
-  deleteUserController,
-  getUserController,
-  loginController,
+  newUserController, //Done
+  updateUserController, //Done
+  deleteUserController, //Done
+  getUserController, //Done
+  loginController, //Done
 } = require('./Controladores/users');
 const {
-  listServices,
-  newServiceController,
-  deleteService,
+  listServicesController, //Done
+  listSingleServiceController, //Done
+  newServiceController, //Done
+  deleteServiceController, //Done
   updateService,
   doneService,
-  listSingleService,
 } = require('./Controladores/servicios');
 const {
   listComments,
@@ -30,6 +30,7 @@ const app = express();
 app.use(fileUpload());
 app.use(express.json());
 app.use(morgan('dev'));
+app.use('/uploads', express.static('./uploads'));
 
 // Rutas de usuarios
 app.post('/user', newUserController);
@@ -39,10 +40,10 @@ app.delete('/user', authUser, deleteUserController);
 app.put('/user', authUser, updateUserController);
 
 // Rutas de servicios
-app.get('/', listServices);
+app.get('/', listServicesController);
+app.get('/service/:id', listSingleServiceController);
 app.post('/', authUser, newServiceController);
-app.get('/service/:id', listSingleService);
-app.delete('/service/:id', deleteService);
+app.delete('/service/:id', authUser,  deleteServiceController);
 app.put('/service/:id', updateService);
 app.put('/service/:id/done', doneService);
 
@@ -70,6 +71,6 @@ app.use((error, req, res, next) => {
 });
 
 // Lanzamos el servidor
-app.listen(3001, () => {
+app.listen(3000, () => {
   console.log('Servidor en http://localhost:3000');
 });
