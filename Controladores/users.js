@@ -73,7 +73,7 @@ const deleteUserController = async (req, res, next) => {
   let connection;
   try {
     const usuariosId = req.userId;
-    console.log(usuariosId)
+    console.log(usuariosId);
     connection = await getConnection();
 
     await connection.query(
@@ -104,13 +104,15 @@ const updateUserController = async (req, res, next) => {
     // validacion de los campos nameUser, email, password (required) y biografia con JOI
     await updateUserSchema.validateAsync(req.body);
 
+    const passwordHash = await bcrypt.hash(password, 8);
+
     await connection.query(
       `
         UPDATE USUARIOS 
         SET NOMBRE =?, EMAIL=?, CONTRASENHA=?, BIOGRAFIA=?
         WHERE id=?
       `,
-      [nameUser, email, password, biografia, usuariosId]
+      [nameUser, email, passwordHash, biografia, usuariosId]
     );
     res.send({
       status: 'ok',

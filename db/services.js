@@ -87,6 +87,13 @@ const deleteService = async (id) => {
   try {
     connection = await getConnection();
 
+    await connection.query(`DELETE FROM COMENTARIOS WHERE ID_SERVICIOS = ?`, [
+      id,
+    ]);
+    await connection.query(
+      `DELETE FROM UPLOAD_SERVICE WHERE ID_SERVICIOS = ?`,
+      [id]
+    );
     const [result] = await connection.query(
       `DELETE FROM SERVICIOS WHERE ID = ?`,
       [id]
