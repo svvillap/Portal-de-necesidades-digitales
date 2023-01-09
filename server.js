@@ -41,9 +41,9 @@ app.delete('/user', authUser, deleteUserController);
 app.put('/user', authUser, updateUserController);
 
 // Rutas de servicios
-app.get('/', listServicesController);
+app.get('/service', listServicesController);
+app.post('/service', authUser, newServiceController);
 app.get('/service/:id', listSingleServiceController);
-app.post('/', authUser, newServiceController);
 app.delete('/service/:id', authUser, deleteServiceController);
 app.put('/service/:id', authUser, updateServiceController);
 app.put('/service/:id/done', authUser, doneServiceController);
