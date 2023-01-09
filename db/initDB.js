@@ -12,6 +12,7 @@ async function main() {
     console.log('Borrando tablas antiguas...');
 
     await connection.query('DROP TABLE IF EXISTS COMENTARIOS');
+    await connection.query('DROP TABLE IF EXISTS UPLOAD_SERVICE');
     await connection.query('DROP TABLE IF EXISTS SERVICIOS');
     await connection.query('DROP TABLE IF EXISTS SUBCATEGORIAS');
     await connection.query('DROP TABLE IF EXISTS CATEGORIAS');
@@ -30,8 +31,6 @@ async function main() {
             ); 
         `);
 
-
-
     await connection.query(`
         CREATE TABLE CATEGORIAS (
             ID INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -49,7 +48,6 @@ async function main() {
             FOREIGN KEY (ID_CATEGORIAS) REFERENCES CATEGORIAS(ID)
         );
         `);
-
 
     await connection.query(`
     CREATE TABLE SERVICIOS (
@@ -70,7 +68,6 @@ async function main() {
         ); 
     `);
 
-
     await connection.query(`
     CREATE TABLE COMENTARIOS (
         ID INTEGER PRIMARY KEY AUTO_INCREMENT, 
@@ -82,13 +79,23 @@ async function main() {
         FOREIGN KEY (ID_SERVICIOS) REFERENCES SERVICIOS(ID)
     );
     `);
+
+    await connection.query(`
+    CREATE TABLE UPLOAD_SERVICE (
+      ID INTEGER PRIMARY KEY AUTO_INCREMENT, 
+      ID_USUARIOS INTEGER NOT NULL, 
+      ID_SERVICIOS INTEGER NOT NULL, 
+      FILE_NAME VARCHAR(100),
+      CREATED_AT DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (ID_USUARIOS) REFERENCES USUARIOS(ID),
+      FOREIGN KEY (ID_SERVICIOS) REFERENCES SERVICIOS(ID)
+    )`);
   } catch (error) {
     console.error(error);
   } finally {
-    console.log(`Tablas creadas`)
+    console.log(`Tablas creadas`);
     if (connection) connection.release();
   }
 }
- // Añadimos los seeds cuando termine la ejecución de main()
+// Añadimos los seeds cuando termine la ejecución de main()
 main().then(() => seeds());
-

@@ -1,4 +1,5 @@
-const { getConnection } = require('../db');
+const { getConnection } = require('../db/db.js');
+const path = require('path');
 const {
   createService,
   listServices,
@@ -10,7 +11,7 @@ const {
   updateServiceSchema,
 } = require('../validator/validadorServicios');
 
-const { generateError } = require('../helpers');
+const { generateError, creathePathIfNotExists } = require('../helpers');
 
 const listServicesController = async (req, res, next) => {
   // Este endpoint es para listar servicios
@@ -140,6 +141,41 @@ const doneServiceController = async (req, res, next) => {
   }
 };
 
+const uploadFileServiceController = async (req, res, next) => {
+  // Este endpoint es para cargar un fichero con una solución
+  let connection;
+  try {
+    connection = await getConnection();
+    const { id } = req.params;
+    const service = await listSingleService(id);
+    if (service.STATUS === 'done') {
+      throw generateError('Este servicio ya ha sido resuelto', 401);
+    }
+    if (req.files && req.files.solution) {
+      const file = req.files.solution;
+      const filename = `${Date.now()}-${file.name}`;
+      const uploadsDir = path.join(__dirname, `../uploads/${id}`);
+      await creathePathIfNotExists(uploadsDir);
+      await file.mv(`${uploadsDir}/${filename}`);
+      await connection.query(
+        `
+      INSERT INTO UPLOAD_SERVICE (ID_USUARIOS, ID_SERVICIOS, FILE_NAME) 
+      VALUES (?, ?, ?)
+    `,
+        [req.userId, id, filename]
+      );
+      res.send({
+        status: 'ok',
+        message: 'La solución se ha cargado correctamente',
+      });
+    } else {
+      throw generateError('no se ha cargado ningún parámetro a solution', 400);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 const listSingleServiceController = async (req, res, next) => {
   // Este endpoint es para listar un servicio
   try {
@@ -161,4 +197,5 @@ module.exports = {
   deleteServiceController,
   updateServiceController,
   doneServiceController,
+  uploadFileServiceController,
 };

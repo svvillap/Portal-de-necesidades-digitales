@@ -16,6 +16,7 @@ const {
   deleteServiceController, //Done
   updateServiceController, //Done
   doneServiceController, //Done
+  uploadFileServiceController, //done?
 } = require('./Controladores/servicios');
 const {
   listCommentsController, //Done
@@ -44,8 +45,9 @@ app.get('/', listServicesController);
 app.get('/service/:id', listSingleServiceController);
 app.post('/', authUser, newServiceController);
 app.delete('/service/:id', authUser, deleteServiceController);
-app.put('/service/:id', updateServiceController);
-app.put('/service/:id/done', doneServiceController);
+app.put('/service/:id', authUser, updateServiceController);
+app.put('/service/:id/done', authUser, doneServiceController);
+app.post('/service/:id/uploadFile', authUser, uploadFileServiceController);
 
 // Rutas de comentarios
 app.get('/service/:idService/comments', authUser, listCommentsController);
