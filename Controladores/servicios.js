@@ -5,7 +5,10 @@ const {
   listSingleService,
   deleteService,
 } = require('../db/services');
-const { newServiceSchema } = require('../validator/validadorServicios');
+const {
+  newServiceSchema,
+  updateServiceSchema,
+} = require('../validator/validadorServicios');
 
 const { generateError } = require('../helpers');
 
@@ -77,12 +80,16 @@ const updateServiceController = async (req, res, next) => {
   try {
     connection = await getConnection();
     const { id } = req.params;
+    const values = await updateServiceSchema.validateAsync(req.body);
     const service = await listSingleService(id);
     if (req.userId !== service.ID_USUARIOS) {
-      throw generateError('No puedes borrar un servicio que no es tuyo', 401);
+      throw generateError(
+        'No puedes actualizar un servicio que no es tuyo',
+        401
+      );
     }
     const { title, description, price, date, categoriaId, subcategoriaId } =
-      req.body;
+      values;
 
     await connection.query(
       `
@@ -100,7 +107,7 @@ const updateServiceController = async (req, res, next) => {
     next(error);
   } finally {
     if (connection) connection.release();
-  }   
+  }
 };
 
 const doneServiceController = async (req, res, next) => {
@@ -111,7 +118,10 @@ const doneServiceController = async (req, res, next) => {
     const { id } = req.params;
     const service = await listSingleService(id);
     if (req.userId !== service.ID_USUARIOS) {
-      throw generateError('No puedes borrar un servicio que no es tuyo', 401);
+      throw generateError(
+        'No puedes marcar como resuelto un servicio que no es tuyo',
+        401
+      );
     }
     await connection.query(
       `
@@ -125,7 +135,6 @@ const doneServiceController = async (req, res, next) => {
       status: 'ok',
       message: `Servicio hecho con el id: ${id}`,
     });
-    
   } catch (error) {
     next(error);
   }
