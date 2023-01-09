@@ -1,4 +1,27 @@
 # Portal de necesidades digitales
+
+## Configuración
+1) Creación de una base de datos MySQL que permita almacenar la información.
+2) Configuración de la conexión con la base de datos.
+```
+MYSQL_HOST=127.0.0.1
+MYSQL_USER=*****
+MYSQL_PASSWORD=password
+MYSQL_DATABASE=PORTAL_NECESIDADES
+SECRET=****
+```
+3) Lanzamiento del script para la creación de las tablas de la base de datos:
+```
+node db/initDB.js
+```
+## Lanzamiento del servidor
+```
+node server.js
+```
+
+## Documentación
+Se puede cargar en Postman el fichero con la colección de Endpoints `Portal de Necesidades API.postman_collection.json` o también se puede consultar en https://necesidades-digitales.readme.io/reference/getting-started-with-your-api 
+
 ## ¿Qué es?
 Esta plataforma permite a los usuarios obtener información que requieran del medio digital ya sean productos o servicios más estos solo pueden obtenerse de forma digital, no como elementos físicos. Siendo una plataforma de fácil acceso, con servicios y productos de calidad que han sido comprobados antes de ser obtenidos por los usuarios para así ofrecer soluciones de primera a sus necesidades.
 La lista de productos y servicios que se pueden ofrecer es extensa, siempre y cuando sean elementos que puedan ofrecer/adquirir por los usuarios en formato digital. Esto podría ser desde diseño gráfico, marketing, programación, tecnología, etc. Las opciones son considerablemente amplias aunque tenemos una lista con las áreas profesionales con mayor éxito en la plataforma:
