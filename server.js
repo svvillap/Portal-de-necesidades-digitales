@@ -14,8 +14,8 @@ const {
   listSingleServiceController, //Done
   newServiceController, //Done
   deleteServiceController, //Done
-  updateService,
-  doneService,
+  updateServiceController, //Done
+  doneServiceController, //Done
 } = require('./Controladores/servicios');
 const {
   listCommentsController, //Done
@@ -44,8 +44,8 @@ app.get('/', listServicesController);
 app.get('/service/:id', listSingleServiceController);
 app.post('/', authUser, newServiceController);
 app.delete('/service/:id', authUser, deleteServiceController);
-app.put('/service/:id', updateService);
-app.put('/service/:id/done', doneService);
+app.put('/service/:id', updateServiceController);
+app.put('/service/:id/done', doneServiceController);
 
 // Rutas de comentarios
 app.get('/service/:idService/comments', authUser, listCommentsController);

@@ -1,3 +1,4 @@
+const { getConnection } = require('../db');
 const {
   createService,
   listServices,
@@ -70,25 +71,61 @@ const deleteServiceController = async (req, res, next) => {
   }
 };
 
-const updateService = async (req, res, next) => {
+const updateServiceController = async (req, res, next) => {
   // Este endpoint es para actualizar servicios
+  let connection;
   try {
+    connection = await getConnection();
+    const { id } = req.params;
+    const service = await listSingleService(id);
+    if (req.userId !== service.ID_USUARIOS) {
+      throw generateError('No puedes borrar un servicio que no es tuyo', 401);
+    }
+    const { title, description, price, date, categoriaId, subcategoriaId } =
+      req.body;
+
+    await connection.query(
+      `
+      UPDATE SERVICIOS
+      SET TITULO=?, DESCRIPCION=?, PRECIO=?, FECHA_LIMITE=?, ID_CATEGORIAS=?, ID_SUBCATEGORIAS=?
+      WHERE id=?
+    `,
+      [title, description, price, date, categoriaId, subcategoriaId, id]
+    );
     res.send({
-      status: 'error',
-      message: 'Not implemented',
+      status: 'ok',
+      message: `Servicio actualizado con el id: ${id}`,
     });
   } catch (error) {
     next(error);
-  }
+  } finally {
+    if (connection) connection.release();
+  }   
 };
 
-const doneService = async (req, res, next) => {
+const doneServiceController = async (req, res, next) => {
   // Este endpoint es para marcar servicios como realizados
+  let connection;
   try {
+    connection = await getConnection();
+    const { id } = req.params;
+    const service = await listSingleService(id);
+    if (req.userId !== service.ID_USUARIOS) {
+      throw generateError('No puedes borrar un servicio que no es tuyo', 401);
+    }
+    await connection.query(
+      `
+      UPDATE SERVICIOS
+      SET STATUS=?
+      WHERE id=?
+    `,
+      ['done', id]
+    );
     res.send({
-      status: 'error',
-      message: 'Not implemented',
+      status: 'ok',
+      message: `Servicio hecho con el id: ${id}`,
     });
+    
   } catch (error) {
     next(error);
   }
@@ -113,6 +150,6 @@ module.exports = {
   listSingleServiceController,
   newServiceController,
   deleteServiceController,
-  updateService,
-  doneService,
+  updateServiceController,
+  doneServiceController,
 };
