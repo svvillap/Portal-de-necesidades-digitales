@@ -8,7 +8,8 @@ const createService = async (
   date,
   userId,
   categoriaId,
-  subcategoriaId
+  subcategoriaId,
+  filename
 ) => {
   let connection;
   try {
@@ -22,7 +23,7 @@ const createService = async (
       categoriaId,
       subcategoriaId,
     ]);
-    const sqlQuery = `INSERT INTO SERVICIOS (TITULO, DESCRIPCION, PRECIO, FECHA_LIMITE, ID_USUARIOS, ID_CATEGORIAS, ID_SUBCATEGORIAS) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    const sqlQuery = `INSERT INTO SERVICIOS (TITULO, DESCRIPCION, PRECIO, FECHA_LIMITE, ID_USUARIOS, ID_CATEGORIAS, ID_SUBCATEGORIAS, FICHERO_DIGITAL) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
     const [result] = await connection.query(sqlQuery, [
       title,
       description,
@@ -31,6 +32,7 @@ const createService = async (
       userId,
       categoriaId,
       subcategoriaId,
+      filename,
     ]);
     return result.insertId;
   } catch (error) {
@@ -47,7 +49,7 @@ const listServices = async () => {
   try {
     connection = await getConnection();
     const [result] = await connection.query(
-        `SELECT * FROM SERVICIOS ORDER BY CREATED_AT DESC`
+      `SELECT * FROM SERVICIOS ORDER BY CREATED_AT DESC`
     );
     return result;
   } catch (error) {
@@ -70,12 +72,11 @@ const listSingleService = async (id) => {
     if (result.length === 0) {
       throw generateError(`No existe el servicio con el id: ${id}`, 404);
     }
-    return result[0];  
+    return result[0];
   } catch (error) {
     console.log(error);
     throw error;
-  }
-  finally {
+  } finally {
     if (connection) connection.release();
   }
 };
@@ -97,12 +98,10 @@ const deleteService = async (id) => {
   } catch (error) {
     console.log(error);
     throw error;
-  }
-  finally {
+  } finally {
     if (connection) connection.release();
   }
 };
-
 
 module.exports = {
   createService,
