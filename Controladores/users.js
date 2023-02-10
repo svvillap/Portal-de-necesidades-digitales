@@ -109,7 +109,7 @@ const updateUserController = async (req, res, next) => {
     await connection.query(
       `
         UPDATE USUARIOS 
-        SET NOMBRE =?, EMAIL=?, CONTRASENHA=?, BIOGRAFIA=?
+        SET NOMBRE =?, EMAIL=?, CONTRASENHA=?, BIOGRAFIA=?, CONTRASENHA_FECHA_UPDATED=CURRENT_TIMESTAMP
         WHERE id=?
       `,
       [nameUser, email, passwordHash, biografia, usuariosId]

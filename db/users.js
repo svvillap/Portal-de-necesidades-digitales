@@ -29,7 +29,7 @@ const getUserById = async (id) => {
     let connection;
     try{
         connection = await getConnection();
-        const [result] = await connection.query(`SELECT ID, NOMBRE, EMAIL, BIOGRAFIA, IMAGEN, NOMBRE_USUARIO, CREATED_AT FROM USUARIOS WHERE ID = ?`, [id]);
+        const [result] = await connection.query(`SELECT ID, NOMBRE, EMAIL, BIOGRAFIA, IMAGEN, NOMBRE_USUARIO, CREATED_AT, CONTRASENHA_FECHA_UPDATED FROM USUARIOS WHERE ID = ?`, [id]);
         if(result.length === 0) {
             throw generateError('No existe un usuario con ese id', 404)
         }
