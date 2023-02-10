@@ -2,6 +2,7 @@ const { generateError } = require('../helpers');
 const { getConnection } = require('./db');
 const { listComments } = require('./comments');
 
+
 const createService = async (
   title,
   description,
@@ -44,6 +45,24 @@ const createService = async (
   }
 };
 
+const listSolutions = async (id) => {
+  let connection; 
+  try {
+    connection = await getConnection();
+    const [solutions] = await connection.query(
+      `SELECT * FROM UPLOAD_SERVICE WHERE ID_SERVICIOS=? ORDER BY CREATED_AT DESC`,
+      [id]
+    );
+  return solutions;
+  } catch (error) {
+    console.log(error);
+    throw generateError('No se ha podido listar las soluciones', 500);
+  } finally {
+    if (connection) connection.release();
+  }
+};
+
+
 const listServices = async () => {
   // Este endpoint es para listar servicios
   let connection;
@@ -53,11 +72,6 @@ const listServices = async () => {
       `SELECT * FROM SERVICIOS ORDER BY CREATED_AT DESC`
     );
 
-  for ( let i = 0; i < services.length ; i++){
-    const service = services[i]
-    const comments = await listComments(service.ID);
-    service.COMENTARIOS = comments;
-}
     return services;
   } catch (error) {
     console.log(error);
@@ -79,7 +93,12 @@ const listSingleService = async (id) => {
     if (result.length === 0) {
       throw generateError(`No existe el servicio con el id: ${id}`, 404);
     }
-    return result[0];
+    const service = result[0]
+    const comments = await listComments(service.ID);
+    const solutions= await listSolutions(service.ID)
+    service.COMENTARIOS = comments;
+    service.SOLUCIONES = solutions;
+    return service;
   } catch (error) {
     console.log(error);
     throw error;

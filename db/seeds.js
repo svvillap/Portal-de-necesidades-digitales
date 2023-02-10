@@ -60,6 +60,16 @@ async function seeds() {
     `
   );
 
+  await connection.query(
+    `
+      INSERT INTO UPLOAD_SERVICE (id, id_usuarios, id_servicios, file_name) VALUES
+      (1, 1, 3, 'solucion de servicio de promagracion'), 
+      (2, 2, 2, 'solucion de servicio de traduccion'), 
+      (3, 3, 5, 'solucion de servicio de asesoria legal'), 
+      (4, 4, 1, 'solucion de servicio de marketing'), 
+      (5, 5, 2, 'solucion de servicio de redaccion')
+    `
+  );
 } catch (error) {
   console.error(error);
 } finally {
