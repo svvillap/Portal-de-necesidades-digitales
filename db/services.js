@@ -1,5 +1,6 @@
 const { generateError } = require('../helpers');
 const { getConnection } = require('./db');
+const { listComments } = require('./comments');
 
 const createService = async (
   title,
@@ -48,10 +49,16 @@ const listServices = async () => {
   let connection;
   try {
     connection = await getConnection();
-    const [result] = await connection.query(
+    const [services] = await connection.query(
       `SELECT * FROM SERVICIOS ORDER BY CREATED_AT DESC`
     );
-    return result;
+
+  for ( let i = 0; i < services.length ; i++){
+    const service = services[i]
+    const comments = await listComments(service.ID);
+    service.COMENTARIOS = comments;
+}
+    return services;
   } catch (error) {
     console.log(error);
     throw generateError('No se ha podido listar los servicios', 500);
