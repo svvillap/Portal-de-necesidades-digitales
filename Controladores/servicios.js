@@ -32,16 +32,19 @@ const newServiceController = async (req, res, next) => {
   try {
     const userId = req.userId;
     const values = await newServiceSchema.validateAsync(req.body);
+    console.log(req.body)
     const { title, description, price, date, categoriaId, subcategoriaId } =
       values;
     if (!req.files || !req.files.file) {
       throw generateError('falta el campo file', 400);
     }
-    const file = req.files.file;
-    const filename = `${Date.now()}-${file.name}`;
-    const uploadsDir = path.join(__dirname, `../uploads/files/`);
-    await creathePathIfNotExists(uploadsDir);
-    await file.mv(`${uploadsDir}/${filename}`);
+
+      const file = req.files.file;
+      const filename = `${Date.now()}-${file.name}`;
+      const uploadsDir = path.join(__dirname, `../uploads/files/`);
+      await creathePathIfNotExists(uploadsDir);
+      await file.mv(`${uploadsDir}/${filename}`);
+    
     const id = await createService(
       title,
       description,
