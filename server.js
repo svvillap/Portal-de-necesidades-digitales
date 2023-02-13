@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const fileUpload = require('express-fileupload');
+const cors = require('cors');
 
 const {
   newUserController, //Done
@@ -27,6 +28,14 @@ const {
 const { authUser } = require('./Middlewares/auth');
 
 const app = express();
+//Permitir el acceso desde cualquier origen
+app.use(cors());
+
+app.get('/', function (req, res, next) {
+  res.json({msg: 'CORS-enabled for all origins!'})
+});
+
+
 
 app.use(fileUpload());
 app.use(express.json());
@@ -73,6 +82,6 @@ app.use((error, req, res, next) => {
 });
 
 // Lanzamos el servidor
-app.listen(3000, () => {
-  console.log('Servidor en http://localhost:3000');
+app.listen(4000, function () {
+  console.log('CORS-enabled web server listening on port 3000');
 });

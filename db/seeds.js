@@ -70,10 +70,10 @@ async function seeds() {
       (5, 5, 2, 'solucion de servicio de redaccion')
     `
   );
+  console.log(`Categorías añadidas`)
 } catch (error) {
   console.error(error);
 } finally {
-  console.log(`Categorías añadidas`)
   if (connection) connection.release();
   process.exit();
 }

@@ -91,10 +91,10 @@ async function main() {
       FOREIGN KEY (ID_USUARIOS) REFERENCES USUARIOS(ID),
       FOREIGN KEY (ID_SERVICIOS) REFERENCES SERVICIOS(ID)
     )`);
+    console.log(`Tablas creadas`);
   } catch (error) {
     console.error(error);
   } finally {
-    console.log(`Tablas creadas`);
     if (connection) connection.release();
   }
 }

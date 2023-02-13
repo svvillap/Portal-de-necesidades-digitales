@@ -189,6 +189,7 @@ const listSingleServiceController = async (req, res, next) => {
   // Este endpoint es para listar un servicio
   try {
     const { id } = req.params;
+    console.log(id)
     const service = await listSingleService(id);
     res.send({
       status: 'ok',
