@@ -83,5 +83,5 @@ app.use((error, req, res, next) => {
 
 // Lanzamos el servidor
 app.listen(4000, function () {
-  console.log('CORS-enabled web server listening on port 3000');
+  console.log('CORS-enabled web server listening on port 4000');
 });
