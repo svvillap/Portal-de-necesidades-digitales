@@ -8,7 +8,8 @@ const {
   updateUserController, //Done
   deleteUserController, //Done
   getUserController, //Done
-  loginController, //Done
+  loginController,
+  getMeController, //Done
 } = require('./Controladores/users');
 const {
   listServicesController, //Done
@@ -48,6 +49,7 @@ app.get('/user/:id', getUserController);
 app.post('/login', loginController);
 app.delete('/user', authUser, deleteUserController);
 app.put('/user', authUser, updateUserController);
+app.get('/user', authUser, getMeController)
 
 // Rutas de servicios
 app.get('/service', listServicesController);

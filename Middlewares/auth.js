@@ -22,6 +22,7 @@ const authUser = async(req, res, next) => {
     // get the user by req.userId
     
     let user = await getUserById(req.userId)
+    console.log(req.userId)
     console.log(token.iat * 1000, user.CONTRASENHA_FECHA_UPDATED.getTime())
     if (token.iat * 1000 + 3600000 > user.CONTRASENHA_FECHA_UPDATED.getTime()) { next()}
     else { throw generateError('sesion no válida', 401)}

@@ -154,10 +154,26 @@ const loginController = async (req, res, next) => {
   }
 };
 
+const getMeController = async (req, res, next) => {
+  // Este endpoint es para obtener los datos del usuario logueado
+  try {
+    const user = await getUserById(req.userId);
+
+    res.send({
+      status: 'ok',
+      message: user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 module.exports = {
   newUserController,
   deleteUserController,
   updateUserController,
   getUserController,
   loginController,
+  getMeController,
 };
