@@ -69,7 +69,7 @@ const listServices = async () => {
   try {
     connection = await getConnection();
     const [services] = await connection.query(
-      `SELECT * FROM servicios LEFT JOIN usuarios on servicios.ID_USUARIOS = usuarios.ID ORDER BY servicios.CREATED_AT DESC`
+      `SELECT servicios.*, usuarios.NOMBRE_USUARIO FROM servicios LEFT JOIN usuarios on servicios.ID_USUARIOS = usuarios.ID ORDER BY servicios.CREATED_AT DESC`
     );
 
     return services;
