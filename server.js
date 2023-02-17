@@ -61,7 +61,7 @@ app.put('/service/:id/done', authUser, doneServiceController);
 app.post('/service/:id/uploadFile', authUser, uploadFileServiceController);
 
 // Rutas de comentarios
-app.get('/service/:idService/comments', authUser, listCommentsController);
+app.get('/service/:idService/comments', listCommentsController);
 app.post('/service/:idService/comments', authUser, createCommentController);
 app.get('/comments/:id', authUser, listSingleCommentController);
 app.delete('/comments/:id', authUser, deleteCommentController);
