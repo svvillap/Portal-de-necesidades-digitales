@@ -29,9 +29,11 @@ const createCommentController = async (req, res, next) => {
     const values = await newCommentSchema.validateAsync(req.body);
     const { texto } = values;
     const id = await createComment(userId, idService, texto);
+
+    const comment = await listSingleComment(id);
     res.send({
       status: 'ok',
-      message: `Comentario creado con el id: ${id}`,
+      message: comment,
     });
   } catch (error) {
     next(error);
