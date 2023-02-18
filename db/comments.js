@@ -7,7 +7,7 @@ const listComments = async (id) => {
   try {
     connection = await getConnection();
     const [result] = await connection.query(
-      `SELECT * FROM COMENTARIOS WHERE ID_SERVICIOS=? ORDER BY CREATED_AT DESC`,
+      `SELECT comentarios.*, usuarios.NOMBRE, usuarios.NOMBRE_USUARIO, usuarios.IMAGEN FROM comentarios LEFT JOIN usuarios on comentarios.ID_USUARIOS = USUARIOS.ID WHERE comentarios.ID_SERVICIOS = ? ORDER BY comentarios.CREATED_AT DESC`,
       [id]
     );
     return result;
