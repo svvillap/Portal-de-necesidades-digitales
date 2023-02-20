@@ -37,11 +37,11 @@ const newUserController = async (req, res, next) => {
       console.log(imageFileName);
     }
 
-    const { nameUser, email, password } = req.body;
-    if (!nameUser || !email || !password) {
+    const { name, nameUser, email, password } = req.body;
+    if (!name || !nameUser || !email || !password) {
       throw generateError('Faltan campos', 400);
     }
-    const id = await createUser(email, password, nameUser, imageFileName);
+    const id = await createUser(name, email, password, nameUser, imageFileName);
 
     res.send({
       status: 'ok',

@@ -2,6 +2,10 @@ const Joi = require('joi');
 const { generateError } = require('../helpers');
 
 const newUserSchema = Joi.object({
+  name: Joi.string()
+    .max(30)
+    .required()
+    .error(generateError('El campo name debe existir', 400)),
   nameUser: Joi.string()
     .min(3)
     .max(30)
