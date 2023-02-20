@@ -69,8 +69,12 @@ const listServices = async () => {
   try {
     connection = await getConnection();
     const [services] = await connection.query(
-      `SELECT servicios.*, usuarios.NOMBRE_USUARIO FROM servicios LEFT JOIN usuarios on servicios.ID_USUARIOS = usuarios.ID ORDER BY servicios.CREATED_AT DESC`
-    );
+      `SELECT SERVICIOS.*, USUARIOS.NOMBRE_USUARIO, CATEGORIAS.NOMBRE AS CATEGORIAS, SUBCATEGORIAS.NOMBRE AS SUBCATEGORIAS
+      FROM SERVICIOS 
+      LEFT JOIN USUARIOS on SERVICIOS.ID_USUARIOS = USUARIOS.ID
+      LEFT JOIN CATEGORIAS on SERVICIOS.ID_CATEGORIAS = CATEGORIAS.ID 
+      LEFT JOIN SUBCATEGORIAS On SERVICIOS.ID_SUBCATEGORIAS = SUBCATEGORIAS.ID
+      ORDER BY SERVICIOS.CREATED_AT DESC`);
 
     return services;
   } catch (error) {
