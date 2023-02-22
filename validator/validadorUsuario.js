@@ -5,12 +5,12 @@ const newUserSchema = Joi.object({
   name: Joi.string()
     .max(30)
     .required()
-    .error(generateError('El campo name debe existir', 400)),
+    .error(generateError('El campo name debe existir y no debe ser mayor a 30 caracteres', 400)),
   nameUser: Joi.string()
     .min(3)
     .max(30)
     .required()
-    .error(generateError('El campo nameUser debe existir', 400)),
+    .error(generateError('El campo nameUser debe existir y debe ser entre 3 a 30 caracteres', 400)),
   email: Joi.string()
     .email()
     .error(
@@ -34,7 +34,7 @@ const updateUserSchema = Joi.object({
     .min(3)
     .max(30)
     .required()
-    .error(generateError('El campo nameUser debe existir', 400)),
+    .error(generateError('El campo nameUser debe existir y debe ser entre 3 a 30 caracteres', 400)),
   email: Joi.string()
     .email()
     .error(
