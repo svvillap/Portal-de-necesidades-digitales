@@ -20,7 +20,7 @@ const newUserController = async (req, res, next) => {
     //validacion con joi de los campos NameUser, email, password.
     await newUserSchema.validateAsync(req.body);
     //
-    let imageFileName;
+    let imageFileName = "k3DdS9FH7MRakCR3KOhPi.jpg";
     if (req.files && req.files.image) {
       //procesado de imagenes
       //Creo path del directiorio uploads
