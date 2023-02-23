@@ -30,6 +30,10 @@ const newUserSchema = Joi.object({
 });
 
 const updateUserSchema = Joi.object({
+  name: Joi.string()
+    .max(30)
+    .required()
+    .error(generateError('El campo name debe existir y no debe ser mayor a 30 caracteres', 400)),
   nameUser: Joi.string()
     .min(3)
     .max(30)

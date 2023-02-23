@@ -100,7 +100,7 @@ const updateUserController = async (req, res, next) => {
   try {
     connection = await getConnection();
     const usuariosId = req.userId;
-    const { nameUser, email, password, biografia } = req.body;
+    const { name, nameUser, email, password, biografia } = req.body;
     // validacion de los campos nameUser, email, password (required) y biografia con JOI
     await updateUserSchema.validateAsync(req.body);
 
@@ -109,10 +109,10 @@ const updateUserController = async (req, res, next) => {
     await connection.query(
       `
         UPDATE USUARIOS 
-        SET NOMBRE =?, EMAIL=?, CONTRASENHA=?, BIOGRAFIA=?, CONTRASENHA_FECHA_UPDATED=CURRENT_TIMESTAMP
+        SET NOMBRE =?, NOMBRE_USUARIO=?, EMAIL=?, CONTRASENHA=?, BIOGRAFIA=?, CONTRASENHA_FECHA_UPDATED=CURRENT_TIMESTAMP
         WHERE id=?
       `,
-      [nameUser, email, passwordHash, biografia, usuariosId]
+      [name, nameUser, email, passwordHash, biografia, usuariosId]
     );
     res.send({
       status: 'ok',
