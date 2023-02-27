@@ -106,13 +106,19 @@ const updateUserController = async (req, res, next) => {
 
     const passwordHash = await bcrypt.hash(password, 8);
 
+    const file = req.files.imagen;
+      const filename = `${Date.now()}-${file.name}`;
+      const uploadsDir = path.join(__dirname, `../uploads/files/`);
+      await creathePathIfNotExists(uploadsDir);
+      await file.mv(`${uploadsDir}/${filename}`);
+
     await connection.query(
       `
         UPDATE USUARIOS 
-        SET NOMBRE =?, NOMBRE_USUARIO=?, EMAIL=?, CONTRASENHA=?, BIOGRAFIA=?, CONTRASENHA_FECHA_UPDATED=CURRENT_TIMESTAMP
+        SET NOMBRE =?, NOMBRE_USUARIO=?, EMAIL=?, CONTRASENHA=?, BIOGRAFIA=?, IMAGEN=?, CONTRASENHA_FECHA_UPDATED=CURRENT_TIMESTAMP
         WHERE id=?
       `,
-      [name, nameUser, email, passwordHash, biografia, usuariosId]
+      [name, nameUser, email, passwordHash, biografia, filename, usuariosId]
     );
     res.send({
       status: 'ok',

@@ -59,6 +59,7 @@ const updateUserSchema = Joi.object({
     .min(0)
     .max(150)
     .error(generateError('El campo debe ser menor a 150 caracteres', 400)),
+  imagen: Joi.any().optional(),  
 });
 
 const loginSchema = Joi.object({
