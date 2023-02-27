@@ -25,6 +25,8 @@ const createCommentController = async (req, res, next) => {
   // Este endpoint es para crear comentarios
   try {
     const userId = req.userId;
+    console.log(req);
+    console.log("hola")
     const idService = req.params.idService;
     const values = await newCommentSchema.validateAsync(req.body);
     const { texto } = values;

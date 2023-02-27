@@ -12,6 +12,7 @@ const {
 } = require('../validator/validadorServicios');
 
 const { generateError, creathePathIfNotExists } = require('../helpers');
+const { error } = require('console');
 
 const listServicesController = async (req, res, next) => {
   // Este endpoint es para listar servicios
@@ -171,17 +172,17 @@ const uploadFileServiceController = async (req, res, next) => {
       await file.mv(`${uploadsDir}/${filename}`);
       await connection.query(
         `
-      INSERT INTO UPLOAD_SERVICE (ID_USUARIOS, ID_SERVICIOS, FILE_NAME) 
-      VALUES (?, ?, ?)
+      INSERT INTO UPLOAD_SERVICE (ID_USUARIOS, ID_SERVICIOS, FILE_NAME, COMENTARIO) 
+      VALUES (?, ?, ?, ?)
     `,
-        [req.userId, id, filename]
+        [req.userId, id, filename, req.body.comentario]
       );
       res.send({
         status: 'ok',
         message: 'La solución se ha cargado correctamente',
       });
     } else {
-      throw generateError('no se ha cargado ningún parámetro a solution', 400);
+      throw generateError(error);
     }
   } catch (error) {
     next(error);
